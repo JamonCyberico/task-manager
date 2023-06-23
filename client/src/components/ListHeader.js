@@ -1,7 +1,10 @@
 function ListHeader() {
   return (
-    <div className="App">
-      This is the list header
+    <div className="list-header">
+      <div className="button-container">
+        <button>Add</button>
+        <button>Edit</button>
+      </div>
     </div>
   );
 }
