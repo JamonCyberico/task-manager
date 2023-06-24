@@ -15,8 +15,11 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 10px;
-  width: 800px;
+  margin-top: 50px;
+  width: 900px;
 }
+
+/* Buttons */
 
 .button-container {
   display: flex;
@@ -31,9 +34,66 @@ body {
   background-color: transparent;
 }
 
+.edit {
+  color: #212529;
+  border: 1px solid #ff9a56;
+  cursor: pointer;
+}
+
+.edit:hover {
+  background-color: #ff9a56;
+  color: #fff;
+}
+
+.delete {
+  color: #212529;
+  border: 1px solid #dc3545;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.add {
+  color: #212529;
+  border: 1px solid #ffa56e;
+  cursor: pointer;
+}
+
+.add:hover {
+  background-color: #ffa56e;
+  color: #fff;
+}
+
+/* List Header */
+
 .list-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e1d2ff;
+}
+
+/* List Item */
+
+.list-item {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-item .info-container {
+  display: flex;
+  align-items: center;
+}
+
+.list-item .info-container .tick-icon {
+  width:20px;
+  height: 20px;
 }

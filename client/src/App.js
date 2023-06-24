@@ -1,4 +1,6 @@
 import ListHeader from "./components/ListHeader";
+import ListItem from "./components/ListItem";
+
 import { getData } from "./services/tasksApi";
 import { useEffect, useState } from "react";
 
@@ -16,9 +18,18 @@ function App() {
     fetchTasks();
   }, []);
 
+  const sortedTasks = tasks.sort((a, b) => {
+    return b.urgency - a.urgency;
+  });
+
   return (
-    <div className="App">
+    <div className="app">
       <ListHeader />
+      <div className="list-container">
+        {sortedTasks.map((task) => (
+          <ListItem task={task} key={task.id} />
+        ))}
+      </div>
     </div>
   );
 }
