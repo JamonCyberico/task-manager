@@ -5,7 +5,7 @@ function ListItem({ task }) {
   return (
     <div className="list-item">
       <div className="info-container">
-        <CheckCircleIcon className="tick-icon" />
+        <CheckCircleIcon className="icon" />
         <p className="task-title">{task.title}</p>
         <ProgressBar />
       </div>
