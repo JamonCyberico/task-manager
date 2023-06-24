@@ -2,14 +2,11 @@
   "name": "task-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install && npm run build)",
     "server": "node ./server/server.js",
-    "client": "cd client && npm install"
+    "client": "cd client && npm start"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "if-env": "^1.0.4"
   }
