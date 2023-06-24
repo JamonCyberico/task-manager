@@ -20,3 +20,7 @@ app.get("/tasks/:userEmail", async (req, res) => {
     console.error(err.message)
   }
 });
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`)
+});
