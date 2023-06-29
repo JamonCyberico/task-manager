@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 import { useState } from "react";
 
-function ListHeader() {
+function ListHeader({ fetchTasks }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ function ListHeader() {
         <button className="logout">Logout</button>
       </div>
 
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"create"} />}
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"create"} fetchTasks={fetchTasks}/>}
     </div>
   );
 }

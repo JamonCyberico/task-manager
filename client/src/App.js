@@ -24,10 +24,10 @@ function App() {
 
   return (
     <div className="app">
-      <ListHeader />
+      <ListHeader fetchTasks={fetchTasks}/>
       <div className="list-container">
         {sortedTasks.map((task) => (
-          <ListItem task={task} key={task.id} />
+          <ListItem task={task} key={task.id} fetchTasks={fetchTasks}/>
         ))}
       </div>
     </div>

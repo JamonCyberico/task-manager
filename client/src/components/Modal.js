@@ -1,15 +1,15 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
-import { postData } from "../services/tasksApi";
+import { postData, updateData } from "../services/tasksApi";
 
-function Modal({ setIsModalOpen, mode}) {
+function Modal({ setIsModalOpen, mode, task, fetchTasks }) {
   const [isEdit, setIsEdit] = useState(false);
 
   const [data, setData] = useState({
-    user_email: "name@email.com",
-    title: "",
-    urgency: 1,
-    date: isEdit ? "" : new Date(),
+    user_email: isEdit ? task.user_email : "name@email.com",
+    title: isEdit ? task.title : null,
+    urgency: isEdit ? task.urgency : 1,
+    date: isEdit ? task.date : new Date(),
   });
 
   useEffect(() => {
@@ -27,14 +27,30 @@ function Modal({ setIsModalOpen, mode}) {
   };
 
   const addTask = async (e) => {
+    e.preventDefault();
+
     try {
       await postData(data).then((res) => {
         setIsModalOpen(false)
+        fetchTasks();
       })
     } catch (err) {
       console.log(err)
     }
   };
+
+  const editTask = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateData(task.id, data).then((res) => {
+        setIsModalOpen(false)
+        fetchTasks();
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div className="overlay">
@@ -65,7 +81,7 @@ function Modal({ setIsModalOpen, mode}) {
             value={data.urgency}
             onChange={handleChange}
           />
-          <input type="submit" className="submit-button" onClick={isEdit ? addTask : addTask}/>
+          <input type="submit" className="submit-button" onClick={isEdit ? editTask : addTask}/>
         </form>
       </div>
     </div>
