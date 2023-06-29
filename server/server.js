@@ -21,6 +21,35 @@ app.get("/tasks/:userEmail", async (req, res) => {
   }
 });
 
+app.post("/tasks" , async(req,res) => {
+  const { user_email, title, urgency, date } = req.body
+
+  try {
+      const id = uuidv4();
+      const newTask = await pool.query(
+        "INSERT INTO tasks (id, user_email, title, urgency, date) VALUES ($1, $2, $3, $4, $5) RETURNING *", 
+        [id, user_email, title, urgency, date]
+      );
+      res.json(newTask.rows[0]);
+  } catch (err) {
+    console.error(err.message)
+  }
+});
+
+app.put("/tasks/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user_email, title, urgency, date } = req.body;
+    const updateTask = await pool.query(
+      "UPDATE tasks SET user_email = $1, title = $2, urgency = $3, date = $4 WHERE id = $5",
+      [user_email, title, urgency, date, id]
+    );
+    res.json("Task was updated!");
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
 });

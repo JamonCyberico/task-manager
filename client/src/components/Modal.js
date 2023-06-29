@@ -1,11 +1,12 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
+import { postData } from "../services/tasksApi";
 
 function Modal({ setIsModalOpen, mode}) {
   const [isEdit, setIsEdit] = useState(false);
 
   const [data, setData] = useState({
-    user_email: "",
+    user_email: "name@email.com",
     title: "",
     urgency: 1,
     date: isEdit ? "" : new Date(),
@@ -23,8 +24,16 @@ function Modal({ setIsModalOpen, mode}) {
       ...prevData,
       [name]: value,
     }));
+  };
 
-    console.log(data);
+  const addTask = async (e) => {
+    try {
+      await postData(data).then((res) => {
+        setIsModalOpen(false)
+      })
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -56,7 +65,7 @@ function Modal({ setIsModalOpen, mode}) {
             value={data.urgency}
             onChange={handleChange}
           />
-          <input type="submit" className="submit-button"/>
+          <input type="submit" className="submit-button" onClick={isEdit ? addTask : addTask}/>
         </form>
       </div>
     </div>
