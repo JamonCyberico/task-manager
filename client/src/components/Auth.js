@@ -3,7 +3,7 @@ import { auth } from "../services/tasksApi";
 import { useCookies } from "react-cookie";
 
 function Auth() {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const [setCookie] = useCookies(null)
 
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
