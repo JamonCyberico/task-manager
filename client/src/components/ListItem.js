@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
-import ProgressBar from "./ProgressBar";
-import Modal from './Modal';
+import UrgencyBar from "./UrgencyBar";
 import { deleteData } from '../services/tasksApi';
 
-function ListItem({ task, fetchTasks }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function ListItem({ task, fetchTasks, openModal }) {
 
   const deleteTask = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
@@ -26,14 +23,12 @@ function ListItem({ task, fetchTasks }) {
       <div className="info-container">
         <CheckCircleIcon className="icon" />
         <p className="task-title">{task.title}</p>
-        <ProgressBar />
+        <UrgencyBar urgency={task.urgency}/>
       </div>
       <div className="button-container">
-        <button className='edit' onClick={() => setIsModalOpen(true)}>Edit</button>
+        <button className='edit' onClick={() => openModal(task)}>Edit</button>
         <button className='delete' onClick={() => deleteTask(task.id)}>Delete</button>
       </div>
-
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"edit"} task={task} fetchTasks={fetchTasks}/>}
     </div>
   );
 }

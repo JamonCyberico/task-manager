@@ -1,22 +1,16 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { postData, updateData } from "../services/tasksApi";
 
 function Modal({ setIsModalOpen, mode, task, fetchTasks }) {
-  const [isEdit, setIsEdit] = useState(false);
-
+  const isEdit = mode === "edit";
+  
   const [data, setData] = useState({
     user_email: isEdit ? task.user_email : "name@email.com",
-    title: isEdit ? task.title : null,
+    title: isEdit ? task.title : '',
     urgency: isEdit ? task.urgency : 1,
     date: isEdit ? task.date : new Date(),
   });
-
-  useEffect(() => {
-    if (mode === "edit") {
-      setIsEdit(true);
-    }
-  }, [mode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,7 +75,11 @@ function Modal({ setIsModalOpen, mode, task, fetchTasks }) {
             value={data.urgency}
             onChange={handleChange}
           />
-          <input type="submit" className="submit-button" onClick={isEdit ? editTask : addTask}/>
+          <input 
+            type="submit" 
+            className="submit-button" 
+            onClick={isEdit ? editTask : addTask} 
+            value={isEdit ? "Save Task" : "Add Task"}/>
         </form>
       </div>
     </div>

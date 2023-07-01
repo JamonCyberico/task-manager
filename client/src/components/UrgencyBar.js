@@ -1,4 +1,4 @@
-const ProgressBar = ({ urgency }) => {
+const UrgencyBar = ({ urgency }) => {
   const renderedRectangles = () => {
     // rectangles from yellow to red, depending on urgency value [1 -> 5]
     const rectangleColors = ["#FFD700", "#FFBF00", "#FF8000", "#FF4000", "#FF0000"];
@@ -26,4 +26,4 @@ const ProgressBar = ({ urgency }) => {
   return <div className="progress-bar">{renderedRectangles()}</div>;
 };
 
-export default ProgressBar
+export default UrgencyBar
