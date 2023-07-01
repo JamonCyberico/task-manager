@@ -1,12 +1,14 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { postData, updateData } from "../services/tasksApi";
 
 function Modal({ setIsModalOpen, mode, task, fetchTasks }) {
+  const [cookies] = useCookies(null)
   const isEdit = mode === "edit";
   
   const [data, setData] = useState({
-    user_email: isEdit ? task.user_email : "name@email.com",
+    user_email: isEdit ? task.user_email : cookies.userEmail,
     title: isEdit ? task.title : '',
     urgency: isEdit ? task.urgency : 1,
     date: isEdit ? task.date : new Date(),

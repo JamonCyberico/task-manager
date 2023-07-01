@@ -5,10 +5,12 @@ import Auth from "./components/Auth";
 
 import { getData } from "./services/tasksApi";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 function App() {
-  const user_email = "name@email.com";
-  const authToken = false;
+  const [cookies] = useCookies(null)
+  const user_email = cookies.userEmail ?? ''
+  const authToken = cookies.authToken ?? ''
 
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +29,7 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  });
 
   const sortedTasks = tasks.sort((a, b) => {
     return b.urgency - a.urgency;

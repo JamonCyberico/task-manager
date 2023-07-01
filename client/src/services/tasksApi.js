@@ -47,3 +47,18 @@ export const deleteData = async (id) => {
     return [];
   }
 }
+
+export const auth = async (data, endpoint) => {
+  try {
+    console.log(data);
+    const response = await axios.post(`http://localhost:8000/${endpoint}`, JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data
+  } catch (err) {
+    console.error(err.message)
+    return [];
+  }
+}
