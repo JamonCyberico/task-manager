@@ -1,12 +1,14 @@
 import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
 import Modal from "./components/Modal";
+import Auth from "./components/Auth";
 
 import { getData } from "./services/tasksApi";
 import { useEffect, useState } from "react";
 
 function App() {
   const user_email = "name@email.com";
+  const authToken = false;
 
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,13 +35,18 @@ function App() {
   
   return (
     <div className="app">
-      <ListHeader fetchTasks={fetchTasks}/>
+      {!authToken && <Auth />}
+      {authToken && (
+      <div>
+        <ListHeader fetchTasks={fetchTasks}/>
       <div className="list-container">
         {sortedTasks.map((task) => (
           <ListItem task={task} key={task.id} fetchTasks={fetchTasks} openModal={openModal}/>
         ))}
       </div>
       {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"edit"} task={selectedTask} fetchTasks={fetchTasks}/>}
+      </div> 
+      )}
     </div>
   );
 }
