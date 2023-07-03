@@ -28,7 +28,10 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    if (authToken)
+      {
+        fetchTasks();
+      }
   });
 
   const sortedTasks = tasks.sort((a, b) => {

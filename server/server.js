@@ -62,6 +62,54 @@ app.delete("/tasks/:id", async(req, res) => {
   }
 })
 
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  try {
+    const newUser = await pool.query(
+      "INSERT INTO users (email, hashed_password) VALUES ($1, $2) RETURNING *",
+      [email, hashedPassword]
+    );
+  
+    const token = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+    res.json({email, token})
+  } catch (err) {
+    console.error(err.messag)
+    if (err) {
+      return res.json({err: err.detail})
+    }
+  }
+})
+
+app.post("/login", async(req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await pool.query(
+      "SELECT * FROM users WHERE email = $1", [email]
+    );
+
+    if (user.rows.length === 0) {
+      return res.json({err: "User does not exist"})
+    }
+
+    const validPassword = await bcrypt.compare(
+      password,
+      user.rows[0].hashed_password
+    );
+
+    if (!validPassword) {
+      return res.json({err: "Invalid password"})
+    }
+
+    const token = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+    res.json({ email, token })
+  } catch (err) {
+    console.log(err.message)
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
 });

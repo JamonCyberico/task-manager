@@ -3,7 +3,7 @@ import { auth } from "../services/tasksApi";
 import { useCookies } from "react-cookie";
 
 function Auth() {
-  const [setCookie] = useCookies(null)
+  const [cookies, setCookie, removeCookie] = useCookies(null);
 
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
@@ -34,8 +34,8 @@ function Auth() {
         setError(res.err)
       } else {
         setError(null)
-        setCookie("authToken", res.token)
-        setCookie("userEmail", res.email)  
+        setCookie("authToken", res.token);
+        setCookie("userEmail", res.email);         
       }
     })
   }
