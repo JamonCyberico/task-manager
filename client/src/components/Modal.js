@@ -1,14 +1,16 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext.ts";
+
 import { postData, updateData } from "../services/tasksApi";
 
 function Modal({ setIsModalOpen, mode, task, fetchTasks }) {
-  const [cookies] = useCookies(null)
+  const { user } = useContext(AuthContext);
   const isEdit = mode === "edit";
   
   const [data, setData] = useState({
-    user_email: isEdit ? task.user_email : cookies.userEmail,
+    user_email: isEdit ? task.user_email : user.userEmail,
     title: isEdit ? task.title : '',
     urgency: isEdit ? task.urgency : 1,
     date: isEdit ? task.date : new Date(),

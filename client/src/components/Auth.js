@@ -1,9 +1,10 @@
 import { useState } from "react";
+
 import { auth } from "../services/tasksApi";
-import { useCookies } from "react-cookie";
+import { useAuth } from "../hooks/useAuth.ts";
 
 function Auth() {
-  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const { login } = useAuth();
 
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
@@ -34,8 +35,8 @@ function Auth() {
         setError(res.err)
       } else {
         setError(null)
-        setCookie("authToken", res.token);
-        setCookie("userEmail", res.email);         
+        login({ userEmail: res.email, authToken: res.token });   
+        console.log({ userEmail: res.email, authToken: res.token })     
       }
     })
   }

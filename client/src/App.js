@@ -5,16 +5,15 @@ import Auth from "./components/Auth";
 
 import { getData } from "./services/tasksApi";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+
+import { AuthContext } from "./context/AuthContext.ts";
 
 function App() {
-  const [cookies] = useCookies(null)
-  const user_email = cookies.userEmail ?? ''
-  const authToken = cookies.authToken ?? ''
-
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  const [user, setUser] = useState(null);
 
   const openModal = (task) => {
     setSelectedTask(task);
@@ -22,13 +21,13 @@ function App() {
   };
 
   const fetchTasks = async () => {
-    await getData(user_email).then((res) => {
+    await getData(user.userEmail).then((res) => {
       setTasks(res);
     });
   };
 
   useEffect(() => {
-    if (authToken)
+    if (user)
       {
         fetchTasks();
       }
@@ -40,18 +39,21 @@ function App() {
   
   return (
     <div className="app">
-      {!authToken && <Auth />}
-      {authToken && (
-      <div>
-        <ListHeader fetchTasks={fetchTasks}/>
-      <div className="list-container">
-        {sortedTasks.map((task) => (
-          <ListItem task={task} key={task.id} fetchTasks={fetchTasks} openModal={openModal}/>
-        ))}
-      </div>
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"edit"} task={selectedTask} fetchTasks={fetchTasks}/>}
-      </div> 
-      )}
+      <AuthContext.Provider value={{ user, setUser }}>
+        {!user ? 
+        <Auth /> 
+        : 
+        (<div>
+          <ListHeader fetchTasks={fetchTasks}/>
+          <div className="list-container">
+            {sortedTasks.map((task) => (
+              <ListItem task={task} key={task.id} fetchTasks={fetchTasks} openModal={openModal} />
+            ))}
+          </div>
+          {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"edit"} task={selectedTask} fetchTasks={fetchTasks}/>}
+        </div> 
+        )}
+      </AuthContext.Provider>
     </div>
   );
 }
