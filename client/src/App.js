@@ -1,43 +1,43 @@
-import ListHeader from "./components/ListHeader";
-import ListItem from "./components/ListItem";
-import Modal from "./components/Modal";
-import Auth from "./components/Auth";
+import ListHeader from './components/ListHeader'
+import ListItem from './components/ListItem'
+import Modal from './components/Modal'
+import Auth from './components/Auth'
 
-import { getData } from "./services/tasksApi";
-import { useEffect, useState } from "react";
+import { getData } from './services/tasksApi'
+import { useEffect, useState } from 'react'
 
-import { AuthContext } from "./context/AuthContext.ts";
+import { AuthContext } from './context/AuthContext.ts'
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Profile from "./components/Profile/Profile";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Profile from './components/Profile/Profile'
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [tasks, setTasks] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedTask, setSelectedTask] = useState(null)
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   const openModal = (task) => {
-    setSelectedTask(task);
-    setIsModalOpen(true);
-  };
+    setSelectedTask(task)
+    setIsModalOpen(true)
+  }
 
   const fetchTasks = async () => {
     await getData(user.userEmail).then((res) => {
-      setTasks(res);
-    });
-  };
+      setTasks(res)
+    })
+  }
 
   useEffect(() => {
     if (user) {
-      fetchTasks();
+      fetchTasks()
     }
-  });
+  })
 
   const sortedTasks = tasks.sort((a, b) => {
-    return b.urgency - a.urgency;
-  });
+    return b.urgency - a.urgency
+  })
 
   return (
     <div className="app">
@@ -53,18 +53,13 @@ function App() {
                     <ListHeader fetchTasks={fetchTasks} />
                     <div className="list-container">
                       {sortedTasks.map((task) => (
-                        <ListItem
-                          task={task}
-                          key={task.id}
-                          fetchTasks={fetchTasks}
-                          openModal={openModal}
-                        />
+                        <ListItem task={task} key={task.id} fetchTasks={fetchTasks} openModal={openModal} />
                       ))}
                     </div>
                     {isModalOpen && (
                       <Modal
                         setIsModalOpen={setIsModalOpen}
-                        mode={"edit"}
+                        mode={'edit'}
                         task={selectedTask}
                         fetchTasks={fetchTasks}
                       />
@@ -80,7 +75,7 @@ function App() {
         </Router>
       </AuthContext.Provider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

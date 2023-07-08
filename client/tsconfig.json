@@ -2,6 +2,6 @@
   "compilerOptions": {
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "jsx": "react",
+    "jsx": "react"
   }
 }

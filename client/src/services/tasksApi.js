@@ -1,25 +1,25 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const getData = async (userEmail) => {
   try {
     const response = await axios.get(`http://localhost:8000/tasks/${userEmail}`)
     return response.data
-  } catch(err) {
+  } catch (err) {
     console.log(err.message)
-    return [];  
+    return []
   }
-};
+}
 
 export const postData = async (data) => {
   try {
     const response = await axios.post(`http://localhost:8000/tasks`, JSON.stringify(data), {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-    });
+    })
     return response.data
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message)
     return []
   }
 }
@@ -28,37 +28,37 @@ export const updateData = async (id, data) => {
   try {
     const response = await axios.put(`http://localhost:8000/tasks/${id}`, JSON.stringify(data), {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-    });
-    return response.data;
+    })
+    return response.data
   } catch (err) {
-    console.error(err.message);
-    return [];
+    console.error(err.message)
+    return []
   }
 }
 
 export const deleteData = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:8000/tasks/${id}`);
-    return response.data;
+    const response = await axios.delete(`http://localhost:8000/tasks/${id}`)
+    return response.data
   } catch (err) {
     console.error(err.message)
-    return [];
+    return []
   }
 }
 
 export const auth = async (data, endpoint) => {
   try {
-    console.log(data);
+    console.log(data)
     const response = await axios.post(`http://localhost:8000/${endpoint}`, JSON.stringify(data), {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-    });
+    })
     return response.data
   } catch (err) {
     console.error(err.message)
-    return [];
+    return []
   }
 }
