@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "./context/AuthContext.ts";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Profile from "./components/Profile";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const [tasks, setTasks] = useState([]);

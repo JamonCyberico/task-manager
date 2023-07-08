@@ -1,7 +1,9 @@
+import './styles.css'
+
 function Profile() {
 
   return (
-    <div className="list-item">
+    <div className="profile-text">
       This is the profile page
     </div>
   );
