@@ -8,6 +8,10 @@ body {
   justify-content: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
 }
 
 .app {
@@ -15,8 +19,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 10px;
-  margin-top: 50px;
-  width: 900px;
+}
+
+.default-view {
+  width: 1000px;
 }
 
 /* Auth */
@@ -57,6 +63,10 @@ body {
 .progress-bar {
   display: flex;
   margin-left: 20px;
+}
+
+.task-title {
+  margin-left: 10px;
 }
 
 /* Buttons */

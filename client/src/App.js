@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 
 import { AuthContext } from "./context/AuthContext.ts";
 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Profile from "./components/Profile";
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,32 +30,54 @@ function App() {
   };
 
   useEffect(() => {
-    if (user)
-      {
-        fetchTasks();
-      }
+    if (user) {
+      fetchTasks();
+    }
   });
 
   const sortedTasks = tasks.sort((a, b) => {
     return b.urgency - a.urgency;
   });
-  
+
   return (
     <div className="app">
       <AuthContext.Provider value={{ user, setUser }}>
-        {!user ? 
-        <Auth /> 
-        : 
-        (<div>
-          <ListHeader fetchTasks={fetchTasks}/>
-          <div className="list-container">
-            {sortedTasks.map((task) => (
-              <ListItem task={task} key={task.id} fetchTasks={fetchTasks} openModal={openModal} />
-            ))}
+        <Router>
+          <div className="app">
+            <Switch>
+              <Route exact path="/">
+                {!user ? (
+                  <Auth />
+                ) : (
+                  <div className="default-view">
+                    <ListHeader fetchTasks={fetchTasks} />
+                    <div className="list-container">
+                      {sortedTasks.map((task) => (
+                        <ListItem
+                          task={task}
+                          key={task.id}
+                          fetchTasks={fetchTasks}
+                          openModal={openModal}
+                        />
+                      ))}
+                    </div>
+                    {isModalOpen && (
+                      <Modal
+                        setIsModalOpen={setIsModalOpen}
+                        mode={"edit"}
+                        task={selectedTask}
+                        fetchTasks={fetchTasks}
+                      />
+                    )}
+                  </div>
+                )}
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+            </Switch>
           </div>
-          {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} mode={"edit"} task={selectedTask} fetchTasks={fetchTasks}/>}
-        </div> 
-        )}
+        </Router>
       </AuthContext.Provider>
     </div>
   );
